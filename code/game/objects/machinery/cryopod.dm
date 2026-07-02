@@ -302,7 +302,7 @@
 		return
 	if(!occupant)
 		return
-	. += emissive_appearance(icon, "[icon_state]_emissive", src, alpha = src.alpha)
+	. += emissive_appearance(icon, "[icon_state]_emissive", alpha = src.alpha)
 	. += mutable_appearance(icon, "[icon_state]_emissive", alpha = src.alpha)
 
 /obj/machinery/cryopod/proc/shuttle_crush()
@@ -343,7 +343,11 @@
 
 	GLOB.key_to_time_of_role_death[key] = world.time
 
-	ghostize(FALSE) //We want to make sure they are not kicked to lobby.
+//	ghostize(FALSE) //We want to make sure they are not kicked to lobby.
+
+	var/mob/new_player/NP = new()
+	client?.screen?.Cut()
+	NP.key = key
 
 	qdel(src)
 
@@ -404,7 +408,7 @@
 
 /obj/machinery/cryopod/verb/eject()
 	set name = "Eject Pod"
-	set category = "IC.Object"
+	set category = "Object"
 	set src in view(0)
 
 	if(usr.incapacitated(TRUE) || usr.loc != src)
@@ -433,7 +437,7 @@
 
 /obj/machinery/cryopod/verb/move_inside()
 	set name = "Enter Pod"
-	set category = "IC.Object"
+	set category = "Object"
 	set src in oview(1)
 
 	move_inside_wrapper(usr, usr)
@@ -451,16 +455,19 @@
 		span_notice("You start climbing into [src]."))
 
 	var/mob/initiator = helper ? helper : user
-	if(!do_after(initiator, 20, NONE, user, BUSY_ICON_GENERIC))
+	if(!do_after(initiator, 20, TRUE, user, BUSY_ICON_GENERIC))
 		return FALSE
 
 	if(!QDELETED(occupant))
 		to_chat(initiator, span_warning("[src] is occupied."))
 		return FALSE
 
+/*
 	user.forceMove(src)
 	occupant = user
 	update_icon()
+*/
+	user.despawn()
 	return TRUE
 
 /obj/machinery/cryopod/proc/go_out()
