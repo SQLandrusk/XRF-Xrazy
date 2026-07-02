@@ -1100,17 +1100,17 @@ GLOBAL_LIST_INIT(xeno_resin_costs, list(
 	if(!L)
 		return
 
-	if(!xeno_owner.check_state())
-		return
+	//if(!xeno_owner.check_state())
+	//	return
 
 	var/msg = stripped_input("Message:", "Psychic Whisper")
 	if(!msg)
 		return
 
 	log_directed_talk(xeno_owner, L, msg, LOG_SAY, "psychic whisper")
-	to_chat(L, span_alien("You hear a strange, alien voice in your head. <i>\"[msg]\"</i>"))
+	to_chat(L, span_alien("You feel a presence in your mind. <i>\"[msg]\"</i>"))
 	to_chat(xeno_owner, span_xenonotice("We said: \"[msg]\" to [L]"))
-	message_admins("[xeno_owner] has sent [L] this psychic message: \"[msg]\" at [ADMIN_VERBOSEJMP(xeno_owner)].")
+	//message_admins("[xeno_owner] has sent [L] this psychic message: \"[msg]\" at [ADMIN_VERBOSEJMP(xeno_owner)].")
 
 // ***************************************
 // *********** Lay Egg

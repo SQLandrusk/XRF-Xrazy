@@ -109,7 +109,7 @@
 
 
 /datum/language_holder/xeno
-	languages = list(/datum/language/xenocommon)
+	languages = list(/datum/language/xenocommon, /datum/language/common)
 
 
 /datum/language_holder/universal/New()
